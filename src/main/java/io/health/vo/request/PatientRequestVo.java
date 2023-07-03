@@ -14,8 +14,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @Setter
 public class PatientRequestVo {
+	
+	
 	@Nullable
 	private Integer pid;
+	private String aadharNumber;
 	private String name;
 	private String lastName;
 	private String address;

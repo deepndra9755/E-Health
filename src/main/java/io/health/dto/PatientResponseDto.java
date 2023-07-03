@@ -2,22 +2,18 @@ package io.health.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
-
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
-@RequiredArgsConstructor
-@Getter
-@Setter
-public class PatientRequestDto implements Serializable {
-	
+public class PatientResponseDto implements Serializable {
+
 	@Nullable
 	private Integer pid;
 	private String aadharNumber;
@@ -25,8 +21,6 @@ public class PatientRequestDto implements Serializable {
 	private String lastName;
 	private String address;
 	private Long mobile;
-	private final LocalDate date;
-	
-	
-
+	private  LocalDate date;
+	private List<CBCReportDto> list;
 }
