@@ -1,11 +1,17 @@
 package io.health.service;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.health.dto.CBCReportDto;
 import io.health.dto.PatientRequestDto;
 import io.health.dto.PatientResponseDto;
+import io.health.entities.CBCReport;
 import io.health.entities.Patient;
+import io.health.exceptions.GeneralException;
 import io.health.repository.PatientRepo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +31,27 @@ public class PatientServiceImpl implements PatientService {
 
 		       return Mapper.getPatientResponse(retrivePatient);
 	}
+
+	@Override
+	public PatientResponseDto addReports(List<CBCReportDto> reports, Integer pid) throws GeneralException {
+		// TODO Auto-generated method stub
+		Optional<Patient> patient=repo.findById(pid);
+		log.info("fetched patient record {}",patient);
+		if(patient.isPresent())
+		{
+			Patient savedPatient=patient.get();
+		 List<CBCReport> retriveReports=savedPatient.getReports();
+		 
+			retriveReports.addAll(Mapper.getReports(reports));
+		    savedPatient.setReports(retriveReports);
+		    log.info("before save {}",savedPatient);
+			repo.save(savedPatient);		
+		       return Mapper.getPatientResponse(repo.save(savedPatient));
+
+		}
+		throw new GeneralException("test", "456");
+		
+			}
 	
 
 
