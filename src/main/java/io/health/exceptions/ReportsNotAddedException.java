@@ -3,17 +3,20 @@ package io.health.exceptions;
 import lombok.Data;
 
 @Data
-public class GeneralException extends Exception {
-	/**
+public class ReportsNotAddedException  extends Exception{/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private String statusMessage;
 	private Integer statusCode;
-    private String statusMessage;
-	public GeneralException(Integer statusCode ,String statusMessage) {
+	
+	public ReportsNotAddedException(Integer statusCode,String statusMessage) {
 		super(statusMessage);
 		this.statusCode=statusCode;
 		this.statusMessage=statusMessage;
 	}
+	
+	
 
 }

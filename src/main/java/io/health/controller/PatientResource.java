@@ -17,6 +17,7 @@ import io.health.dto.PatientResponseDto;
 import io.health.exceptions.AadharInvalidException;
 import io.health.exceptions.GeneralException;
 import io.health.exceptions.PatientNotFoundException;
+import io.health.exceptions.ReportsNotAddedException;
 import io.health.response.ResponseBuilder;
 import io.health.service.PatientService;
 import io.health.utils.Utility;
@@ -37,11 +38,14 @@ public class PatientResource {
 	@Autowired(required = true)
 	private ResponseBuilder response;
 	
+	@Autowired
+	private Utility utility;
+	
 @PostMapping("/Patient")
 public ResponseVo addPatient(@RequestBody PatientRequestVo request) throws AadharInvalidException, GeneralException, JsonProcessingException {
   // checkPatientExist(request.getAadharNumber());
 	log.info("request come to add patinet");
-	Utility.isValidAadharValidation(request.getAadharNumber());
+	utility.isValidAadharValidation(request.getAadharNumber());
    PatientRequestDto requestDto= Mapper.getPatientRequestDto(request);
    PatientResponseDto patientResponse=patientService.addPatient(requestDto);
    return response.buildFinalResponse(patientResponse, "Success", 3000);
@@ -49,8 +53,8 @@ public ResponseVo addPatient(@RequestBody PatientRequestVo request) throws Aadha
 }
 
 @PostMapping("/Patient/{pid}")
-public ResponseVo addReports(@RequestBody List<CBCReportRequest> list,@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException {
-  // checkPatientExist(request.getAadharNumber());
+public ResponseVo addReports(@RequestBody List<CBCReportRequest> list,@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
+  // checkPatientExist(request.getAadhasrNumber());
 	log.info("request come to add report");
    List<CBCReportDto> reportList= Mapper.getCbcReportsDto(list);
    PatientResponseDto patientResponse=patientService.addReports(reportList, pid);

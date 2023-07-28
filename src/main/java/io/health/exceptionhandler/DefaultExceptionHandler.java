@@ -16,17 +16,17 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 
 	@ExceptionHandler(AadharInvalidException.class)
 	public final ResponseEntity<Object> handleInvalidAadharException(AadharInvalidException ex){
-		return new ResponseEntity<Object>(new ResponseVo(8099,ex.getMessage(),null), HttpStatus.OK);
+		return new ResponseEntity<Object>(new ResponseVo(ex.getStatusCode(),ex.getMessage(),null), HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(GeneralException.class)
 	public final ResponseEntity<Object> handleInvalidGeneralException(GeneralException ex){
-		return new ResponseEntity<Object>(new ResponseVo(8443,ex.getMessage(),null), HttpStatus.OK);
+		return new ResponseEntity<Object>(new ResponseVo(ex.getStatusCode(),ex.getMessage(),null), HttpStatus.OK);
 	}
 	
 	@ExceptionHandler(PatientNotFoundException.class)
 	public final ResponseEntity<Object> handlePatientNotFoundException(PatientNotFoundException ex){
-		return new ResponseEntity<Object>(new ResponseVo(9494,ex.getMessage(),null), HttpStatus.OK);
+		return new ResponseEntity<Object>(new ResponseVo(ex.getStatusCode(),ex.getMessage(),null), HttpStatus.OK);
 	}
 	
 }
