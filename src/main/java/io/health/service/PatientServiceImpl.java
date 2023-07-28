@@ -12,6 +12,7 @@ import io.health.dto.PatientResponseDto;
 import io.health.entities.CBCReport;
 import io.health.entities.Patient;
 import io.health.exceptions.GeneralException;
+import io.health.exceptions.PatientNotFoundException;
 import io.health.repository.PatientRepo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,6 +53,17 @@ public class PatientServiceImpl implements PatientService {
 		throw new GeneralException("test", "456");
 		
 			}
+
+	@Override
+	public PatientResponseDto deletePatient(Integer pid) throws GeneralException, PatientNotFoundException {
+		// TODO Auto-generated method stub
+		Optional<Patient> optional=repo.findById(pid);
+		if(optional.isPresent()) {
+			repo.deleteById(pid);
+			return Mapper.getPatientResponse(optional.get());
+		}
+		throw new PatientNotFoundException("not found", "7833");
+	}
 	
 
 

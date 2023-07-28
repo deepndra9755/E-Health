@@ -1,17 +1,16 @@
-package io.health.utills;
+package io.health.response;
 
-import java.io.Serializable;
 
 import org.springframework.stereotype.Service;
-
 import io.health.dto.PatientResponseDto;
 import io.health.vo.response.ResponseVo;
 
 @Service
-public class ResponseBuilder implements Serializable {
+public class ResponseBuilder {
 	
 	public ResponseVo buildFinalResponse(PatientResponseDto patientVo,String statusMessage,Integer statusCode) {
 		return new ResponseVo(statusCode, statusMessage, patientVo);
 	}
+	
 
 }

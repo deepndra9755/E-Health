@@ -8,6 +8,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import io.health.exceptions.AadharInvalidException;
 import io.health.exceptions.GeneralException;
+import io.health.exceptions.PatientNotFoundException;
 import io.health.vo.response.ResponseVo;
 
 @ControllerAdvice
@@ -20,7 +21,12 @@ public class DefaultExceptionHandler extends ResponseEntityExceptionHandler {
 	
 	@ExceptionHandler(GeneralException.class)
 	public final ResponseEntity<Object> handleInvalidGeneralException(GeneralException ex){
-		return new ResponseEntity<Object>(new ResponseVo(8099,ex.getMessage(),null), HttpStatus.OK);
+		return new ResponseEntity<Object>(new ResponseVo(8443,ex.getMessage(),null), HttpStatus.OK);
+	}
+	
+	@ExceptionHandler(PatientNotFoundException.class)
+	public final ResponseEntity<Object> handlePatientNotFoundException(PatientNotFoundException ex){
+		return new ResponseEntity<Object>(new ResponseVo(9494,ex.getMessage(),null), HttpStatus.OK);
 	}
 	
 }
