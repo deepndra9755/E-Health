@@ -14,6 +14,10 @@ import lombok.ToString;
 @ToString
 public class PatientResponseDto implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@Nullable
 	private Integer pid;
 	private String aadharNumber;
@@ -22,5 +26,6 @@ public class PatientResponseDto implements Serializable {
 	private String address;
 	private Long mobile;
 	private  LocalDate date;
+	
 	private List<CBCReportDto> list;
 }

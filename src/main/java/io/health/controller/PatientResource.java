@@ -1,17 +1,28 @@
 package io.health.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import io.health.dto.CBCReportDto;
 import io.health.dto.PatientRequestDto;
 import io.health.dto.PatientResponseDto;
+import io.health.exceptions.AadharInvalidException;
+import io.health.exceptions.GeneralException;
+import io.health.exceptions.PatientNotFoundException;
+import io.health.exceptions.ReportsNotAddedException;
+import io.health.response.ResponseBuilder;
 import io.health.service.PatientService;
-import io.health.utills.ResponseBuilder;
+import io.health.utils.Utility;
+import io.health.vo.request.CBCReportRequest;
 import io.health.vo.request.PatientRequestVo;
-import io.health.vo.response.PatientVo;
 import io.health.vo.response.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -27,16 +38,40 @@ public class PatientResource {
 	@Autowired(required = true)
 	private ResponseBuilder response;
 	
+	@Autowired
+	private Utility utility;
+	
 @PostMapping("/Patient")
-public ResponseVo addPatient(@RequestBody PatientRequestVo request) {
+public ResponseVo addPatient(@RequestBody PatientRequestVo request) throws AadharInvalidException, GeneralException, JsonProcessingException {
   // checkPatientExist(request.getAadharNumber());
 	log.info("request come to add patinet");
+	utility.isValidAadharValidation(request.getAadharNumber());
    PatientRequestDto requestDto= Mapper.getPatientRequestDto(request);
    PatientResponseDto patientResponse=patientService.addPatient(requestDto);
-
    return response.buildFinalResponse(patientResponse, "Success", 3000);
   
 }
 
+@PostMapping("/Patient/{pid}")
+public ResponseVo addReports(@RequestBody List<CBCReportRequest> list,@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
+  // checkPatientExist(request.getAadhasrNumber());
+	log.info("request come to add report");
+   List<CBCReportDto> reportList= Mapper.getCbcReportsDto(list);
+   PatientResponseDto patientResponse=patientService.addReports(reportList, pid);
+   log.info("after saved :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
+   return response.buildFinalResponse(patientResponse, "Success", 3000);
+   
+}
+
+@DeleteMapping("/Patient/{pid}")
+public ResponseVo addReports(@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException, PatientNotFoundException {
+  // checkPatientExist(request.getAadharNumber());
+	log.info("request come to delete patient & reports");
+   PatientResponseDto patientResponse=patientService.deletePatient(pid);
+   log.info("confirmation msg  :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
+   return response.buildFinalResponse(patientResponse, "Success", 3000);
+   
+}
+	 
 
 }

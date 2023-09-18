@@ -1,7 +1,7 @@
-package io.health.utills;
+package io.health.response;
+
 
 import org.springframework.stereotype.Service;
-
 import io.health.dto.PatientResponseDto;
 import io.health.vo.response.ResponseVo;
 
@@ -11,5 +11,6 @@ public class ResponseBuilder {
 	public ResponseVo buildFinalResponse(PatientResponseDto patientVo,String statusMessage,Integer statusCode) {
 		return new ResponseVo(statusCode, statusMessage, patientVo);
 	}
+	
 
 }

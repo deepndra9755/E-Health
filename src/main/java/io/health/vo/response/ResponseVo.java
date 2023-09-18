@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class ResponseVo {
+public class ResponseVo  {
 	
 	private Integer statusCode;
 	private String statusMessage;
