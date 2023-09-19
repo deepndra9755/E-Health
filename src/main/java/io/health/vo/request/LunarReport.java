@@ -1,7 +1,5 @@
 package io.health.vo.request;
 
-import java.time.LocalDate;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,15 +11,15 @@ import lombok.ToString;
 @ToString
 @Getter
 @Setter
-public class CBCReportRequest extends Report {
+public class LunarReport extends Report{
 	private String haemoglobin;
-	private String rbcCount;
+	private String sdsds;
 	private String pcv;
 	private String mcv;
 	private String mch;
 	private String mchc;
 	private String rdw;
-	private String totalWBCCount;
+	private String dddss;
 	private String neutrophils;
 	private String lymphocytes;
 	private String eosinophils;

@@ -19,27 +19,27 @@ public class Mapper {
 	
 
 
-	public static List<CBCReportDto> getCbcReportsDto(List<CBCReportRequest> list) {
-		// TODO Auto-generated method stub
-		return list.stream().map(mapper-> new CBCReportDto(
-				mapper.getAge(), 
-				mapper.getDate(), 
-				mapper.getHaemoglobin(), 
-				mapper.getRbcCount(),
-				mapper.getPcv(),
-				mapper.getMCV(),
-				mapper.getMCH(),
-				mapper.getMCHC(), 
-				mapper.getRDW(),
-				mapper.getTotalWBCCount(),
-				mapper.getNeutrophils(), 
-				mapper.getLymphocytes(),
-				mapper.getEosinophils(),
-				mapper.getMonocytes(), 
-				mapper.getBasophils(),
-				mapper.getPlateletCount())).collect(Collectors.toList());
-				
-	}
+//	public static List<CBCReportDto> getCbcReportsDto(List<CBCReportRequest> list) {
+//		// TODO Auto-generated method stub
+//		return list.stream().map(mapper-> new CBCReportDto(
+//				mapper.getAge(), 
+//				mapper.getDate(), 
+//				mapper.getHaemoglobin(), 
+//				mapper.getRbcCount(),
+//				mapper.getPcv(),
+//				mapper.getMCV(),
+//				mapper.getMCH(),
+//				mapper.getMCHC(), 
+//				mapper.getRDW(),
+//				mapper.getTotalWBCCount(),
+//				mapper.getNeutrophils(), 
+//				mapper.getLymphocytes(),
+//				mapper.getEosinophils(),
+//				mapper.getMonocytes(), 
+//				mapper.getBasophils(),
+//				mapper.getPlateletCount())).collect(Collectors.toList());
+//				
+//	}
 	
 	
 

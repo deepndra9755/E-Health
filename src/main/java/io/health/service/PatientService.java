@@ -11,12 +11,12 @@ import io.health.exceptions.ReportsNotAddedException;
 
 public interface PatientService {
 	
-	//public void checkPatienExist(String pid);
 	public PatientResponseDto addPatient(PatientRequestDto dto);
 	
 	public PatientResponseDto addReports(List<CBCReportDto> reports,Integer pid) throws ReportsNotAddedException;
 
 	public PatientResponseDto deletePatient(Integer pid) throws GeneralException, PatientNotFoundException;
+	void checkPatienExist(Integer pid);
 
 	
 }

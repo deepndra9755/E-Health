@@ -22,8 +22,7 @@ public class Mapper {
 	
 public static final PatientResponseDto getPatientResponse(Patient patient) {
 	
-return new PatientResponseDto(patient.getPid(), patient.getAadharNumber(), patient.getName(), patient.getLastName(), patient.getAddress(), patient.getMobile(), patient.getDate(),
-		getPatientReport(patient.getReports())
+return new PatientResponseDto(patient.getPid(), patient.getAadharNumber(), patient.getName(), patient.getLastName(), patient.getAddress(), patient.getMobile(), patient.getDate()
 		);	
 }
 

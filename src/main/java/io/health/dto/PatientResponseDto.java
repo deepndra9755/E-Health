@@ -27,5 +27,4 @@ public class PatientResponseDto implements Serializable {
 	private Long mobile;
 	private  LocalDate date;
 	
-	private List<CBCReportDto> list;
 }

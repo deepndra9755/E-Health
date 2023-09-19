@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import io.health.dto.CBCReportDto;
 import io.health.dto.PatientRequestDto;
 import io.health.dto.PatientResponseDto;
@@ -23,6 +25,7 @@ import io.health.service.PatientService;
 import io.health.utils.Utility;
 import io.health.vo.request.CBCReportRequest;
 import io.health.vo.request.PatientRequestVo;
+import io.health.vo.request.Report;
 import io.health.vo.response.ResponseVo;
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,25 +56,24 @@ public ResponseVo addPatient(@RequestBody PatientRequestVo request) throws Aadha
 }
 
 @PostMapping("/Patient/{pid}")
-public ResponseVo addReports(@RequestBody List<CBCReportRequest> list,@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
+public String addReports(@RequestBody Report report ,@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException, JsonProcessingException {
   // checkPatientExist(request.getAadhasrNumber());
 	log.info("request come to add report");
-   List<CBCReportDto> reportList= Mapper.getCbcReportsDto(list);
-   PatientResponseDto patientResponse=patientService.addReports(reportList, pid);
-   log.info("after saved :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
-   return response.buildFinalResponse(patientResponse, "Success", 3000);
+	log.info("report having full impl {}",report);
+
+   return new ObjectMapper().writeValueAsString(report);
    
 }
 
-@DeleteMapping("/Patient/{pid}")
-public ResponseVo addReports(@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException, PatientNotFoundException {
-  // checkPatientExist(request.getAadharNumber());
-	log.info("request come to delete patient & reports");
-   PatientResponseDto patientResponse=patientService.deletePatient(pid);
-   log.info("confirmation msg  :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
-   return response.buildFinalResponse(patientResponse, "Success", 3000);
-   
-}
+//@DeleteMapping("/Patient/{pid}")
+//public ResponseVo addReports(@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException, PatientNotFoundException {
+//  // checkPatientExist(request.getAadharNumber());
+//	log.info("request come to delete patient & reports");
+//   PatientResponseDto patientResponse=patientService.deletePatient(pid);
+//   log.info("confirmation msg  :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
+//   return response.buildFinalResponse(patientResponse, "Success", 3000);
+//   
+//}
 	 
 
 }
