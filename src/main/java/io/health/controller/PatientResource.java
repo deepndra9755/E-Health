@@ -2,12 +2,15 @@ package io.health.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -56,11 +59,17 @@ public ResponseVo addPatient(@RequestBody PatientRequestVo request) throws Aadha
 }
 
 @PostMapping("/Patient/{pid}")
-public String addReports(@RequestBody Report report ,@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException, JsonProcessingException {
-  // checkPatientExist(request.getAadhasrNumber());
-	log.info("request come to add report");
-	log.info("report having full impl {}",report);
+public String addReports(@RequestBody Report report ,@PathVariable("pid") Integer pid,@RequestParam(name = "name") String name) throws AadharInvalidException, GeneralException, ReportsNotAddedException, JsonProcessingException, PatientNotFoundException {
+   checkPatientExist(pid);
+    switch (name) {
+	case "cbc":
+		CBCReportRequest cbcReportRequest=report.getCbcReportRequest();
+		patientService.addReports(reports, pid)
+		break;
 
+	default:
+		break;
+	}
    return new ObjectMapper().writeValueAsString(report);
    
 }
@@ -74,6 +83,10 @@ public String addReports(@RequestBody Report report ,@PathVariable("pid") Intege
 //   return response.buildFinalResponse(patientResponse, "Success", 3000);
 //   
 //}
+
+private void checkPatientExist(Integer pid) throws PatientNotFoundException {
+	patientService.checkPatienExist(pid);
+}
 	 
 
 }
