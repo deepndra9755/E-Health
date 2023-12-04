@@ -8,7 +8,8 @@ public class EHealthMgmtApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(EHealthMgmtApplication.class, args);
-	//
 	}
+
+
 
 }

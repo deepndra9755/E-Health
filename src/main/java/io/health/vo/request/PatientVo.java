@@ -1,4 +1,4 @@
-package io.health.vo.response;
+package io.health.vo.request;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,6 +25,6 @@ public class PatientVo {
 	private Long mobile;
 	@Nullable
 	private LocalDate date;
-	private List<ReportsVo> reports;
+	private List<CBCReportVO> reports;
 
 }

@@ -1,6 +1,5 @@
 package io.health.vo.response;
 
-import java.io.Serializable;
 
 import io.health.dto.PatientResponseDto;
 import lombok.AllArgsConstructor;
