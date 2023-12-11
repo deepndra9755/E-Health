@@ -1,20 +1,17 @@
 package io.health.vo.request;
 
 
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+
+import lombok.*;
+
+import java.util.List;
 
 @ToString
 @NoArgsConstructor
-@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, property = "type")
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = CBCReportVO.class, name = "cbcReportVO")
-})
-public abstract class ReportVo {
+@AllArgsConstructor
+public class ReportVo {
 
+    private Integer rid;
     private Integer page;
     private String infectionName;
     private String haemoglobin;
@@ -22,21 +19,15 @@ public abstract class ReportVo {
     private String liverFunctionTest;
     private Float inr;
     private String reportName;
+    private List<CBCReportVO> list;
 
-
-
-    public ReportVo(Integer page, String infectionName, String haemoglobin, String platelets, String liverFunctionTest, Float inr, String reportName) {
-        this.page = page;
-        this.infectionName = infectionName;
-        this.haemoglobin = haemoglobin;
-        this.platelets = platelets;
-        this.liverFunctionTest = liverFunctionTest;
-        this.inr = inr;
-        this.reportName = reportName;
+    public Integer getRid() {
+        return rid;
     }
-// Constructor for JSON deserialization using Jackson
 
-
+    public void setRid(Integer rid) {
+        this.rid = rid;
+    }
 
     public Integer getPage() {
         return page;
@@ -94,5 +85,11 @@ public abstract class ReportVo {
         this.reportName = reportName;
     }
 
+    public List<CBCReportVO> getList() {
+        return list;
+    }
 
+    public void setList(List<CBCReportVO> list) {
+        this.list = list;
+    }
 }

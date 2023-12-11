@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @ToString
 @Entity
-public abstract class Report {
+public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,11 +27,15 @@ public abstract class Report {
     private Float inr;
     private String reportName;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name="PATIENT_ID")
     private Patient patient;
 
-    public Report(Integer page, String infectionName, String haemoglobin, String platelets, String liverFunctionTest, Float inr, String reportName, Patient patient) {
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<CBCReport> reports;
+
+
+    public Report(Integer page, String infectionName, String haemoglobin, String platelets, String liverFunctionTest, Float inr, String reportName, List<CBCReport> reports) {
         this.page = page;
         this.infectionName = infectionName;
         this.haemoglobin = haemoglobin;
@@ -39,7 +43,7 @@ public abstract class Report {
         this.liverFunctionTest = liverFunctionTest;
         this.inr = inr;
         this.reportName = reportName;
-        this.patient = patient;
+        this.reports = reports;
     }
 }
 

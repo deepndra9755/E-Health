@@ -10,10 +10,60 @@ import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@Getter
 @ToString
-@PrimaryKeyJoinColumn(name = "repo_id",referencedColumnName ="reportId")
-public class CBCReport extends Report {
+public class CBCReport {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer cid;
+
+	public String getRedBloodCell() {
+		return redBloodCell;
+	}
+
+	public void setRedBloodCell(String redBloodCell) {
+		this.redBloodCell = redBloodCell;
+	}
+
+	public String getNeutrophil() {
+		return neutrophil;
+	}
+
+	public void setNeutrophil(String neutrophil) {
+		this.neutrophil = neutrophil;
+	}
+
+	public String getEosinophil() {
+		return eosinophil;
+	}
+
+	public void setEosinophil(String eosinophil) {
+		this.eosinophil = eosinophil;
+	}
+
+	public String getBasophil() {
+		return basophil;
+	}
+
+	public void setBasophil(String basophil) {
+		this.basophil = basophil;
+	}
+
+	public String getLymphocyte() {
+		return lymphocyte;
+	}
+
+	public void setLymphocyte(String lymphocyte) {
+		this.lymphocyte = lymphocyte;
+	}
+
+	public String getMonocyte() {
+		return monocyte;
+	}
+
+	public void setMonocyte(String monocyte) {
+		this.monocyte = monocyte;
+	}
 
 	private String redBloodCell;
 	private String neutrophil;
@@ -23,9 +73,7 @@ public class CBCReport extends Report {
 	private String monocyte;
 
 
-
-	public CBCReport(Integer page, String infectionName, String haemoglobin, String platelets, String liverFunctionTest, Float inr, String reportName,String redBloodCell, String neutrophil, String eosinophil, String basophil, String lymphocyte, String monocyte,Patient patient) {
-		super(page, infectionName, haemoglobin, platelets, liverFunctionTest, inr, reportName,patient);
+	public CBCReport(String redBloodCell, String neutrophil, String eosinophil, String basophil, String lymphocyte, String monocyte) {
 		this.redBloodCell = redBloodCell;
 		this.neutrophil = neutrophil;
 		this.eosinophil = eosinophil;

@@ -22,6 +22,8 @@ import io.health.utils.Utility;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.List;
+
 @RestController
 @Slf4j
 @RequestMapping("/api/v1")
@@ -49,13 +51,9 @@ public ResponseEntity<Patient> addPatient(@RequestBody PatientRequestDto request
 }
 
 @PostMapping("/report/{pid}")
-public ResponseEntity<Report> addReports(@RequestBody @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.EXTERNAL_PROPERTY, property = "type") ReportVo report,
-
-											 @PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
+public ResponseEntity<Report> addReports(@RequestBody ReportVo reports,@PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
    //checkPatientExist(request.getAadhasrNumber());
-	Report patientResponse=patientService.addReports(report, pid);
-//   log.info("after saved :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
-//   return response.buildFinalResponse(patientResponse, "Success", 3000);
+	patientService.addReports(reports, pid);
   return  new ResponseEntity<>(null, HttpStatus.OK);
 }
 

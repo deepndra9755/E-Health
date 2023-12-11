@@ -1,6 +1,8 @@
 package io.health.service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import io.health.entities.Report;
 import io.health.repository.ReportRespo;
@@ -46,39 +48,22 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public Report addReports(ReportVo report, Integer pid) throws ReportsNotAddedException {
+    public void addReports(ReportVo report, Integer pid) throws ReportsNotAddedException {
         // TODO Auto-generated method stub
         Optional<Patient> patient = repo.findById(pid);
         log.info("fetched patient record {}", patient);
         if (patient.isPresent()) {
-            if (report instanceof ReportVo) {
-                CBCReportVO cbcReportVO = (CBCReportVO) report;
-                CBCReport cbcReport = new CBCReport(
-                        report.getPage(),
-                        report.getInfectionName(),
-                        report.getHaemoglobin(),
-                        report.getPlatelets(),
-                        report.getLiverFunctionTest(),
-                        report.getInr(),
-                        report.getReportName(),
-                        cbcReportVO.getRedBloodCell(),  // Set values specific to CBCReport
-                        cbcReportVO.getNeutrophil(),
-                        cbcReportVO.getEosinophil(),
-                        cbcReportVO.getBasophil(),
-                        cbcReportVO.getLymphocyte(),
-                        cbcReportVO.getMonocyte(),
-                        patient.get()
-
-                );
-
-             return reportRepo.save(cbcReport)  ;
-
-            }
+            Report report1 = new Report(report.getPage(), report.getInfectionName(), report.getHaemoglobin(), report.getPlatelets(), report.getLiverFunctionTest(), report.getInr(), report.getReportName(), getCBCReport(report.getList()));
+            reportRepo.save(report1);
+        } else {
+            throw new ReportsNotAddedException(config.reportsNotadded, "generic exceptions during processing ");
         }
-
-        throw new ReportsNotAddedException(config.reportsNotadded, "generic exceptions during processing ");
-
     }
+
+    public static List<CBCReport> getCBCReport(List<CBCReportVO> list) {
+        return list.stream().map(cbcReportVO -> new CBCReport(cbcReportVO.getRedBloodCell(), cbcReportVO.getNeutrophil(), cbcReportVO.getEosinophil(), cbcReportVO.getBasophil(), cbcReportVO.getLymphocyte(), cbcReportVO.getMonocyte())).collect(Collectors.toList());
+    }
+
 
     @Override
     public PatientResponseDto deletePatient(Integer pid) throws GeneralException, PatientNotFoundException {
@@ -87,14 +72,14 @@ public class PatientServiceImpl implements PatientService {
 
     @Override
     public Patient getPatient(Integer pid) throws ReportsNotAddedException {
-      Optional<Patient> patient=repo.findById(pid);
-       if (patient.isPresent()){
-       Optional<Report> reportOptional=reportRepo.findById(pid);
-           System.out.println("report detailes"+reportOptional.get());
+        Optional<Patient> patient = repo.findById(pid);
+        if (patient.isPresent()) {
+            Optional<Report> reportOptional = reportRepo.findById(pid);
+            System.out.println("report detailes" + reportOptional.get());
 
-       }
+        }
 
-return null;
+        return null;
     }
 
 //    @Override
