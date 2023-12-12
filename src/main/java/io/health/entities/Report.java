@@ -8,10 +8,8 @@ import lombok.ToString;
 import java.time.LocalDate;
 import java.util.List;
 
-@Inheritance(strategy = InheritanceType.JOINED)
 @NoArgsConstructor
 @Getter
-@ToString
 @Entity
 public class Report {
 
@@ -27,15 +25,15 @@ public class Report {
     private Float inr;
     private String reportName;
 
-    @OneToOne
-    @JoinColumn(name="PATIENT_ID")
+    @OneToOne(cascade = CascadeType.ALL)
     private Patient patient;
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "report_id")
     private List<CBCReport> reports;
 
 
-    public Report(Integer page, String infectionName, String haemoglobin, String platelets, String liverFunctionTest, Float inr, String reportName, List<CBCReport> reports) {
+    public Report(Integer page, String infectionName, String haemoglobin, String platelets, String liverFunctionTest, Float inr, String reportName, List<CBCReport> reports,Patient patient) {
         this.page = page;
         this.infectionName = infectionName;
         this.haemoglobin = haemoglobin;
@@ -43,6 +41,7 @@ public class Report {
         this.liverFunctionTest = liverFunctionTest;
         this.inr = inr;
         this.reportName = reportName;
+        this.patient=patient;
         this.reports = reports;
     }
 }

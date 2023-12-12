@@ -17,7 +17,6 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Patient {
 
 	@Id
@@ -31,7 +30,11 @@ public class Patient {
 	private Long mobile;
 	private LocalDate date;
 
-    
+	@OneToOne(mappedBy = "patient")
+	@JoinColumn(name = "R_ID")
+    private Report report;
+
+
 	public Patient(String aadharNumber, String name, String lastName, String address, Long mobile,
 			LocalDate date) {
 		super();

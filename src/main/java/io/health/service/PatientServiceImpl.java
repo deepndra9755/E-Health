@@ -53,7 +53,7 @@ public class PatientServiceImpl implements PatientService {
         Optional<Patient> patient = repo.findById(pid);
         log.info("fetched patient record {}", patient);
         if (patient.isPresent()) {
-            Report report1 = new Report(report.getPage(), report.getInfectionName(), report.getHaemoglobin(), report.getPlatelets(), report.getLiverFunctionTest(), report.getInr(), report.getReportName(), getCBCReport(report.getList()));
+            Report report1 = new Report(report.getPage(), report.getInfectionName(), report.getHaemoglobin(), report.getPlatelets(), report.getLiverFunctionTest(), report.getInr(), report.getReportName(),getCBCReport(report.getList()),patient.get());
             reportRepo.save(report1);
         } else {
             throw new ReportsNotAddedException(config.reportsNotadded, "generic exceptions during processing ");
