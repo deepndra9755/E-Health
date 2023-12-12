@@ -38,23 +38,23 @@ public class PatientServiceImpl implements PatientService {
     private StatusCodeConfig config;
 
     @Override
-    public Patient addPatient(PatientRequestDto dto) {
+    public PatientResponseDto addPatient(PatientRequestDto dto) {
         // TODO Auto-generated method stub
         Patient entity = Mapper.getPatient(dto);
         Patient retrivePatient = repo.save(entity);
         log.info("retrived data {}", retrivePatient);
-        //return Mapper.getPatientResponse(retrivePatient);
-        return retrivePatient;
+        return Mapper.getPatientDTO(retrivePatient);
     }
 
     @Override
-    public void addReports(ReportVo report, Integer pid) throws ReportsNotAddedException {
-        // TODO Auto-generated method stub
+    public PatientResponseDto addReports(ReportVo report, Integer pid) throws ReportsNotAddedException {
+//
         Optional<Patient> patient = repo.findById(pid);
         log.info("fetched patient record {}", patient);
         if (patient.isPresent()) {
             Report report1 = new Report(report.getPage(), report.getInfectionName(), report.getHaemoglobin(), report.getPlatelets(), report.getLiverFunctionTest(), report.getInr(), report.getReportName(),getCBCReport(report.getList()),patient.get());
-            reportRepo.save(report1);
+            Report report2=reportRepo.save(report1);
+            Mapper.getPatientDTO(report2);
         } else {
             throw new ReportsNotAddedException(config.reportsNotadded, "generic exceptions during processing ");
         }

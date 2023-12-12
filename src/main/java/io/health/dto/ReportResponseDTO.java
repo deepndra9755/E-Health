@@ -1,19 +1,15 @@
 package io.health.dto;
 
-import lombok.Getter;
+import io.health.entities.CBCReport;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
 
-import java.time.LocalDate;
+import java.util.List;
 
 @NoArgsConstructor
-@ToString
-@Getter
-@Setter
-public class ReportDTO {
+public class ReportResponseDTO {
 
-    private Integer rid;
+    private Integer reportId;
     private Integer page;
     private String infectionName;
     private String haemoglobin;
@@ -21,11 +17,10 @@ public class ReportDTO {
     private String liverFunctionTest;
     private Float inr;
     private String reportName;
-    private LocalDate dt;
+    private List<CBCReportResponseDTO> reports;
 
-
-    public ReportDTO(Integer rid, Integer page, String infectionName, String haemoglobin, String platelets, String liverFunctionTest, Float inr, String reportName, LocalDate dt) {
-        this.rid = rid;
+    public ReportResponseDTO(Integer reportId, Integer page, String infectionName, String haemoglobin, String platelets, String liverFunctionTest, Float inr, String reportName, List<CBCReportResponseDTO> reports) {
+        this.reportId = reportId;
         this.page = page;
         this.infectionName = infectionName;
         this.haemoglobin = haemoglobin;
@@ -33,6 +28,6 @@ public class ReportDTO {
         this.liverFunctionTest = liverFunctionTest;
         this.inr = inr;
         this.reportName = reportName;
-        this.dt = dt;
+        this.reports = reports;
     }
 }

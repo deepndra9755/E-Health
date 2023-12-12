@@ -11,6 +11,8 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @ToString
+@Getter
+@Setter
 public class CBCReport {
 
 	@Id
@@ -38,52 +40,5 @@ public class CBCReport {
 	}
 
 
-	public String getRedBloodCell() {
-		return redBloodCell;
-	}
-
-	public void setRedBloodCell(String redBloodCell) {
-		this.redBloodCell = redBloodCell;
-	}
-
-	public String getNeutrophil() {
-		return neutrophil;
-	}
-
-	public void setNeutrophil(String neutrophil) {
-		this.neutrophil = neutrophil;
-	}
-
-	public String getEosinophil() {
-		return eosinophil;
-	}
-
-	public void setEosinophil(String eosinophil) {
-		this.eosinophil = eosinophil;
-	}
-
-	public String getBasophil() {
-		return basophil;
-	}
-
-	public void setBasophil(String basophil) {
-		this.basophil = basophil;
-	}
-
-	public String getLymphocyte() {
-		return lymphocyte;
-	}
-
-	public void setLymphocyte(String lymphocyte) {
-		this.lymphocyte = lymphocyte;
-	}
-
-	public String getMonocyte() {
-		return monocyte;
-	}
-
-	public void setMonocyte(String monocyte) {
-		this.monocyte = monocyte;
-	}
 
 }

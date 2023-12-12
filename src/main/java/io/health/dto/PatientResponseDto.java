@@ -1,29 +1,27 @@
 package io.health.dto;
 
-import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
-
-
-import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class PatientResponseDto implements Serializable {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class PatientResponseDto  {
 	private Integer pid;
 	private String aadharNumber;
 	private String name;
 	private String lastName;
 	private String address;
 	private Long mobile;
-	private  LocalDate date;
-	
-	private List<CBCReportDto> list;
+	private LocalDate date;
+
+
+	public PatientResponseDto(Integer pid, String aadharNumber, String name, String lastName, String address, Long mobile, LocalDate date) {
+		this.pid = pid;
+		this.aadharNumber = aadharNumber;
+		this.name = name;
+		this.lastName = lastName;
+		this.address = address;
+		this.mobile = mobile;
+		this.date = date;
+	}
 }
