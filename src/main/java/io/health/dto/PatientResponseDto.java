@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springframework.lang.Nullable;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -18,7 +17,6 @@ public class PatientResponseDto implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	@Nullable
 	private Integer pid;
 	private String aadharNumber;
 	private String name;

@@ -3,15 +3,9 @@ package io.health.entities;
 import java.time.LocalDate;
 import java.util.List;
 
-import javax.annotation.Generated;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,11 +17,10 @@ import lombok.ToString;
 @NoArgsConstructor
 @Getter
 @Setter
-@ToString
 public class Patient {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer pid;
 	@Column(unique=true)
 	private String aadharNumber;
@@ -36,11 +29,12 @@ public class Patient {
 	private String address;
 	private Long mobile;
 	private LocalDate date;
-	@OneToMany(cascade = {CascadeType.ALL})
-    //@JoinColumn(name="cart_id", nullable=false)
-    //@JoinColumn(name = "cbcReportId")
-	private List<CBCReport> reports;
-    
+
+	@OneToOne(mappedBy = "patient")
+	@JoinColumn(name = "R_ID")
+    private Report report;
+
+
 	public Patient(String aadharNumber, String name, String lastName, String address, Long mobile,
 			LocalDate date) {
 		super();
