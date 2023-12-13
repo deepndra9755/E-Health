@@ -30,9 +30,8 @@ public class Patient {
 	private Long mobile;
 	private LocalDate date;
 
-	@OneToOne(mappedBy = "patient")
-	@JoinColumn(name = "R_ID")
-    private Report report;
+	@OneToMany(mappedBy = "patient",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Report> report;
 
 
 	public Patient(String aadharNumber, String name, String lastName, String address, Long mobile,

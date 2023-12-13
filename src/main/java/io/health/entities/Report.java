@@ -25,7 +25,8 @@ public class Report {
     private Float inr;
     private String reportName;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "patient_id")
     private Patient patient;
 
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)

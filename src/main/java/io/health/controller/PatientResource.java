@@ -48,7 +48,7 @@ public ResponseEntity<PatientResponseDto> addPatient(@RequestBody PatientRequest
 }
 //
 @PostMapping("/report/{pid}")
-public ResponseEntity<PatientResponseDto> addReports(@RequestBody ReportVo reports,@PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
+public ResponseEntity<PatientResponseDto> addReports(@RequestBody List<ReportVo> reports,@PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
    //checkPatientExist(request.getAadhasrNumber());
 	patientService.addReports(reports, pid);
   return  new ResponseEntity<>(null, HttpStatus.OK);

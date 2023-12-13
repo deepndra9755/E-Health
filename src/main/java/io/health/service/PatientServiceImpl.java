@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import io.health.dto.ReportResponseDTO;
 import io.health.entities.Report;
 import io.health.repository.ReportRespo;
 import io.health.service.mapper.Mapper;
@@ -47,14 +48,17 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public PatientResponseDto addReports(ReportVo report, Integer pid) throws ReportsNotAddedException {
+    public List<ReportResponseDTO> addReports(List<ReportVo> report, Integer pid) throws ReportsNotAddedException {
 //
         Optional<Patient> patient = repo.findById(pid);
         log.info("fetched patient record {}", patient);
         if (patient.isPresent()) {
-            Report report1 = new Report(report.getPage(), report.getInfectionName(), report.getHaemoglobin(), report.getPlatelets(), report.getLiverFunctionTest(), report.getInr(), report.getReportName(),getCBCReport(report.getList()),patient.get());
-            Report report2=reportRepo.save(report1);
-            Mapper.getPatientDTO(report2);
+           Iterable<Report> reportList=report.stream().map(reportVo -> new Report(reportVo.getPage(), reportVo.getInfectionName(), reportVo.getHaemoglobin(), reportVo.getPlatelets(), reportVo.getLiverFunctionTest(), reportVo.getInr(), reportVo.getReportName(),getCBCReport(reportVo.getList()),patient.get())).collect(Collectors.toList());
+            //Report report1 = new Report(report.getPage(), report.getInfectionName(), report.getHaemoglobin(), report.getPlatelets(), report.getLiverFunctionTest(), report.getInr(), report.getReportName(),getCBCReport(report.getList()),patient.get());
+            List<Report> saved=reportRepo.saveAll(reportList);
+            System.out.println("reports are saved into db "+saved.toString());
+           //return Mapper.getReportResponseDTO(saved);
+            return null;
         } else {
             throw new ReportsNotAddedException(config.reportsNotadded, "generic exceptions during processing ");
         }
