@@ -43,7 +43,9 @@ public class PatientResource {
 public ResponseEntity<PatientResponseDto> addPatient(@RequestBody PatientRequestDto request) throws AadharInvalidException, GeneralException, JsonProcessingException {
 	log.info("request come to add patinet");
 	PatientResponseDto patientResponse=patientService.addPatient(request);
-   return new ResponseEntity<>(patientResponse,HttpStatus.OK);
+  
+	//
+	return new ResponseEntity<>(patientResponse,HttpStatus.OK);
 
 }
 //
