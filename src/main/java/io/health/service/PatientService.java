@@ -17,11 +17,11 @@ public interface PatientService {
 	//public void checkPatienExist(String pid);
 	public PatientResponseDto addPatient(PatientRequestDto dto);
 	
-	public List<ReportResponseDTO> addReports(List<ReportVo> reports, Integer pid) throws ReportsNotAddedException;
+	public void addReports(List<ReportVo> reports, Integer pid,Integer rid) throws ReportsNotAddedException, PatientNotFoundException;
 
 	public PatientResponseDto deletePatient(Integer pid) throws GeneralException, PatientNotFoundException;
 
-	public Patient getPatient(Integer pid) throws ReportsNotAddedException;
+	public List<ReportResponseDTO> getReports(Integer pid) throws ReportsNotAddedException;
 
 
 }

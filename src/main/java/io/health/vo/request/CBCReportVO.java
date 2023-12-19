@@ -8,8 +8,7 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+
 public class CBCReportVO  {
 
     private String redBloodCell;
@@ -24,5 +23,51 @@ public class CBCReportVO  {
 
     private String monocyte;
 
+    public String getRedBloodCell() {
+        return redBloodCell;
+    }
 
+    public void setRedBloodCell(String redBloodCell) {
+        this.redBloodCell = redBloodCell;
+    }
+
+    public String getNeutrophil() {
+        return neutrophil;
+    }
+
+    public void setNeutrophil(String neutrophil) {
+        this.neutrophil = neutrophil;
+    }
+
+    public String getEosinophil() {
+        return eosinophil;
+    }
+
+    public void setEosinophil(String eosinophil) {
+        this.eosinophil = eosinophil;
+    }
+
+    public String getBasophil() {
+        return basophil;
+    }
+
+    public void setBasophil(String basophil) {
+        this.basophil = basophil;
+    }
+
+    public String getLymphocyte() {
+        return lymphocyte;
+    }
+
+    public void setLymphocyte(String lymphocyte) {
+        this.lymphocyte = lymphocyte;
+    }
+
+    public String getMonocyte() {
+        return monocyte;
+    }
+
+    public void setMonocyte(String monocyte) {
+        this.monocyte = monocyte;
+    }
 }

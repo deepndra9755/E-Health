@@ -9,7 +9,7 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 @Setter
-public class PatientRequestDto implements Serializable {
+public class PatientRequestDto {
 	
 	private String aadharNumber;
 	private String name;

@@ -4,8 +4,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.health.dto.PatientRequestDto;
 import io.health.dto.PatientResponseDto;
+import io.health.dto.ReportResponseDTO;
 import io.health.entities.Patient;
 import io.health.entities.Report;
+import io.health.exceptions.PatientNotFoundException;
 import io.health.vo.request.ReportVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,43 +30,45 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/api/v1")
 public class PatientResource {
-	
-	
-	@Autowired(required = true)
-	private PatientService patientService;
-	
-	@Autowired(required = true)
-	private ResponseBuilder response;
-	
-	@Autowired
-	private Utility utility;
 
-@PostMapping("/Patient")
-public ResponseEntity<PatientResponseDto> addPatient(@RequestBody PatientRequestDto request) throws AadharInvalidException, GeneralException, JsonProcessingException {
-	log.info("request come to add patinet");
-	PatientResponseDto patientResponse=patientService.addPatient(request);
-   return new ResponseEntity<>(patientResponse,HttpStatus.OK);
 
-}
-//
-@PostMapping("/report/{pid}")
-public ResponseEntity<PatientResponseDto> addReports(@RequestBody List<ReportVo> reports,@PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
-   //checkPatientExist(request.getAadhasrNumber());
-	patientService.addReports(reports, pid);
-  return  new ResponseEntity<>(null, HttpStatus.OK);
-}
-//
-//	@GetMapping("/report/{pid}")
-//	public ResponseEntity<Patient> getReports(
-//			@PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
-//		//checkPatientExist(request.getAadhasrNumber());
-//		Patient patientResponse=patientService.getPatient(pid);
-//		System.out.println("response :"+patientResponse);
-////   log.info("after saved :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
-////   return response.buildFinalResponse(patientResponse, "Success", 3000);
-//		return  new ResponseEntity<Patient>(patientResponse, HttpStatus.OK);
-//	}
-//
+    @Autowired(required = true)
+    private PatientService patientService;
+
+    @Autowired(required = true)
+    private ResponseBuilder response;
+
+    @Autowired
+    private Utility utility;
+
+    @PostMapping("/Patient")
+    public ResponseEntity<PatientResponseDto> addPatient(@RequestBody PatientRequestDto request) throws AadharInvalidException, GeneralException, JsonProcessingException {
+        log.info("request come to add patinet");
+        PatientResponseDto patientResponse = patientService.addPatient(request);
+        return new ResponseEntity<>(patientResponse, HttpStatus.OK);
+
+    }
+
+    //
+    @PostMapping("/Patient/{pid}/report/{rid}")
+    public ResponseEntity<String> addReports(@RequestBody List<ReportVo> reports, @PathVariable Integer pid,@PathVariable Integer rid) throws AadharInvalidException, GeneralException, ReportsNotAddedException, PatientNotFoundException {
+        //checkPatientExist(request.getAadhasrNumber());
+         patientService.addReports(reports, pid,rid);
+        return new ResponseEntity<>("saved", HttpStatus.OK);
+    }
+
+    //
+    @GetMapping("/report/{pid}")
+    public ResponseEntity<List<ReportResponseDTO>> getReports(
+            @PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
+        //checkPatientExist(request.getAadhasrNumber());
+        List<ReportResponseDTO> reports = patientService.getReports(pid);
+        System.out.println("response :" + reports);
+//   log.info("after saved :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
+//   return response.buildFinalResponse(patientResponse, "Success", 3000);
+        return new ResponseEntity<>(reports, HttpStatus.OK);
+    }
+
 //	@GetMapping("/patient/{pid}")
 //	public ResponseEntity<Patient> getPatient(
 //			@PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
@@ -86,6 +90,6 @@ public ResponseEntity<PatientResponseDto> addReports(@RequestBody List<ReportVo>
 ////   return response.buildFinalResponse(patientResponse, "Success", 3000);
 ////
 ////}
-	 
+
 
 }

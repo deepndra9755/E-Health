@@ -15,8 +15,6 @@ import lombok.ToString;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 public class Patient {
 
 	@Id
@@ -30,9 +28,9 @@ public class Patient {
 	private Long mobile;
 	private LocalDate date;
 
-	@OneToMany(mappedBy = "patient",cascade = CascadeType.ALL,orphanRemoval = true)
-    private List<Report> report;
-
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "patient_id")
+	private List<Report> report;
 
 	public Patient(String aadharNumber, String name, String lastName, String address, Long mobile,
 			LocalDate date) {
@@ -44,9 +42,69 @@ public class Patient {
 		this.mobile = mobile;
 		this.date = date;
 	}
-    
-    
-	
-    
-    
+
+
+	public Integer getPid() {
+		return pid;
+	}
+
+	public void setPid(Integer pid) {
+		this.pid = pid;
+	}
+
+	public String getAadharNumber() {
+		return aadharNumber;
+	}
+
+	public void setAadharNumber(String aadharNumber) {
+		this.aadharNumber = aadharNumber;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Long getMobile() {
+		return mobile;
+	}
+
+	public void setMobile(Long mobile) {
+		this.mobile = mobile;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
+	}
+
+	public List<Report> getReport() {
+		return report;
+	}
+
+	public void setReport(List<Report> report) {
+		this.report = report;
+	}
 }

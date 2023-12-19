@@ -4,6 +4,7 @@ import io.health.entities.CBCReport;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor
@@ -28,6 +29,78 @@ public class ReportResponseDTO {
         this.liverFunctionTest = liverFunctionTest;
         this.inr = inr;
         this.reportName = reportName;
+        this.reports = reports;
+    }
+
+    public Integer getReportId() {
+        return reportId;
+    }
+
+    public void setReportId(Integer reportId) {
+        this.reportId = reportId;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public String getInfectionName() {
+        return infectionName;
+    }
+
+    public void setInfectionName(String infectionName) {
+        this.infectionName = infectionName;
+    }
+
+    public String getHaemoglobin() {
+        return haemoglobin;
+    }
+
+    public void setHaemoglobin(String haemoglobin) {
+        this.haemoglobin = haemoglobin;
+    }
+
+    public String getPlatelets() {
+        return platelets;
+    }
+
+    public void setPlatelets(String platelets) {
+        this.platelets = platelets;
+    }
+
+    public String getLiverFunctionTest() {
+        return liverFunctionTest;
+    }
+
+    public void setLiverFunctionTest(String liverFunctionTest) {
+        this.liverFunctionTest = liverFunctionTest;
+    }
+
+    public Float getInr() {
+        return inr;
+    }
+
+    public void setInr(Float inr) {
+        this.inr = inr;
+    }
+
+    public String getReportName() {
+        return reportName;
+    }
+
+    public void setReportName(String reportName) {
+        this.reportName = reportName;
+    }
+
+    public List<CBCReportResponseDTO> getReports() {
+        return reports;
+    }
+
+    public void setReports(List<CBCReportResponseDTO> reports) {
         this.reports = reports;
     }
 }

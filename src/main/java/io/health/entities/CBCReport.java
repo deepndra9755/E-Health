@@ -11,8 +11,6 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @ToString
-@Getter
-@Setter
 public class CBCReport {
 
 	@Id
@@ -30,6 +28,17 @@ public class CBCReport {
 	private Report report;
 
 
+	public CBCReport(String redBloodCell, String neutrophil, String eosinophil, String basophil, String lymphocyte, String monocyte,Report report) {
+		this.redBloodCell = redBloodCell;
+		this.neutrophil = neutrophil;
+		this.eosinophil = eosinophil;
+		this.basophil = basophil;
+		this.lymphocyte = lymphocyte;
+		this.monocyte = monocyte;
+		this.report=report;
+	}
+
+
 	public CBCReport(String redBloodCell, String neutrophil, String eosinophil, String basophil, String lymphocyte, String monocyte) {
 		this.redBloodCell = redBloodCell;
 		this.neutrophil = neutrophil;
@@ -38,7 +47,67 @@ public class CBCReport {
 		this.lymphocyte = lymphocyte;
 		this.monocyte = monocyte;
 	}
+	public Integer getCid() {
+		return cid;
+	}
 
+	public void setCid(Integer cid) {
+		this.cid = cid;
+	}
 
+	public String getRedBloodCell() {
+		return redBloodCell;
+	}
 
+	public void setRedBloodCell(String redBloodCell) {
+		this.redBloodCell = redBloodCell;
+	}
+
+	public String getNeutrophil() {
+		return neutrophil;
+	}
+
+	public void setNeutrophil(String neutrophil) {
+		this.neutrophil = neutrophil;
+	}
+
+	public String getEosinophil() {
+		return eosinophil;
+	}
+
+	public void setEosinophil(String eosinophil) {
+		this.eosinophil = eosinophil;
+	}
+
+	public String getBasophil() {
+		return basophil;
+	}
+
+	public void setBasophil(String basophil) {
+		this.basophil = basophil;
+	}
+
+	public String getLymphocyte() {
+		return lymphocyte;
+	}
+
+	public void setLymphocyte(String lymphocyte) {
+		this.lymphocyte = lymphocyte;
+	}
+
+	public String getMonocyte() {
+		return monocyte;
+	}
+
+	public void setMonocyte(String monocyte) {
+		this.monocyte = monocyte;
+	}
+
+	public Report getReport() {
+		return report;
+	}
+
+	public void setReport(Report report) {
+		this.report = report;
+	}
 }
