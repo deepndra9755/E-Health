@@ -56,7 +56,6 @@ public class PatientServiceImpl implements PatientService {
     public void addReports(List<ReportVo> report, Integer pid, Integer rid) throws ReportsNotAddedException, PatientNotFoundException {
 //
         Optional<Patient> patient = repo.findById(pid);
-
         log.info("fetched patient record {}", patient);
         if (patient.isPresent()) {
             Patient patient1=patient.get();
@@ -78,15 +77,13 @@ public class PatientServiceImpl implements PatientService {
                         reportsToBeSave.add(Mapping.getReports(vo,patient1));
                     }
                 }
-                if (cbcReportsLIST.isEmpty()){
+               
                     log.info("adding to cbc reports ");
                     cbcRepos.saveAll(cbcReportsLIST);
-                }
-                else {
-                    log.info("adding to reports ");
 
+                    log.info("adding to reports ");
                     reportRepo.saveAll(reportsToBeSave);
-                }
+
 
             }
             else {
