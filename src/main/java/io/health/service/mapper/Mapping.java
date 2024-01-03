@@ -50,6 +50,19 @@ public class Mapping {
                 .collect(Collectors.toList());
     }
 
+    public static final List<CBCReport> getCBCReport(List<CBCReportVO> reports,Report report1) {
+        return reports.stream()
+                .map(report -> new CBCReport(
+                        report.getRedBloodCell(),
+                        report.getNeutrophil(),
+                        report.getEosinophil(),
+                        report.getBasophil(),
+                        report.getLymphocyte(),
+                        report.getMonocyte(),report1
+                ))
+                .collect(Collectors.toList());
+    }
+
 
     public static final List<ReportResponseDTO> getReportResponseDTO(List<Report> reports) {
         List<ReportResponseDTO> reportResponseDTOList = new ArrayList<ReportResponseDTO>();

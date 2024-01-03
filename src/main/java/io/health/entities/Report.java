@@ -10,6 +10,7 @@ import java.util.List;
 
 @NoArgsConstructor
 @Entity
+//@ToString
 public class Report {
 
     @Id

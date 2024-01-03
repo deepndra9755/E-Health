@@ -17,7 +17,7 @@ public interface PatientService {
 	//public void checkPatienExist(String pid);
 	public PatientResponseDto addPatient(PatientRequestDto dto);
 	
-	public void addReports(List<ReportVo> reports, Integer pid,Integer rid) throws ReportsNotAddedException, PatientNotFoundException;
+	public ReportResponseDTO addReports(ReportVo reportVo, Integer pid,Integer rid) throws ReportsNotAddedException, PatientNotFoundException;
 
 	public PatientResponseDto deletePatient(Integer pid) throws GeneralException, PatientNotFoundException;
 

@@ -12,6 +12,8 @@ import io.health.repository.ReportRespo;
 import io.health.service.mapper.Mapping;
 import io.health.vo.request.CBCReportVO;
 import io.health.vo.request.ReportVo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,8 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class PatientServiceImpl implements PatientService {
+
+    private static final Logger log = LoggerFactory.getLogger(PatientServiceImpl.class);
 
     @Autowired(required = true)
     private PatientRepo repo;
@@ -53,49 +57,36 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public void addReports(List<ReportVo> report, Integer pid, Integer rid) throws ReportsNotAddedException, PatientNotFoundException {
+    public ReportResponseDTO addReports(ReportVo reportVo, Integer pid, Integer rid) throws ReportsNotAddedException, PatientNotFoundException {
 //
         Optional<Patient> patient = repo.findById(pid);
         log.info("fetched patient record {}", patient);
         if (patient.isPresent()) {
-            Patient patient1=patient.get();
-            Optional<Report> reportOptinal = reportRepo.findById(rid);
-            if (reportOptinal.isPresent()) {
-                log.info("report present ");
+            Patient patient1 = patient.get();
+            List<Report> reportList = reportRepo.findByPatientPid(patient1.getPid());
 
-                Report savedReport = reportOptinal.get();
-                int age = savedReport.getPage();
-                List<Report> reportsToBeSave = new ArrayList<>();
-                List<CBCReport> cbcReportsLIST = new ArrayList<>();
-                for (ReportVo vo : report) {
-                    if (vo.getPage().equals(savedReport.getPage()) & vo.getReportName().equals(savedReport.getReportName())) {
-                        List<CBCReportVO> reportVOList = vo.getList();
-                        for (CBCReportVO vo1 : reportVOList) {
-                             cbcReportsLIST.add(new CBCReport(vo1.getRedBloodCell(), vo1.getNeutrophil(), vo1.getEosinophil(), vo1.getBasophil(), vo1.getLymphocyte(), vo1.getMonocyte(),reportOptinal.get()));
-                        }
-                    } else {
-                        reportsToBeSave.add(Mapping.getReports(vo,patient1));
-                    }
+            for (Report reportRetrive : reportList) {
+                log.info("reportName:  {} reportId : {} page: {} infectionName: {} platelets: {} pid: {}", reportRetrive.getReportName(),
+                        reportRetrive.getReportId(),
+                        reportRetrive.getPage(),
+                        reportRetrive.getInfectionName(),
+                        reportRetrive.getPlatelets(),
+                        reportRetrive.getPatient().getPid()
+                );
+                if (reportRetrive.getReportName().equals(reportVo.getReportName()) & reportRetrive.getPage().equals(reportVo.getPage())) {
+                 List<CBCReport> cbcReport= Mapping.getCBCReport(reportVo.getList(),reportRetrive);
+                   cbcRepos.saveAll(cbcReport);
+                    log.info("saving cbc reports");
+                    return null;
                 }
-               
-                    log.info("adding to cbc reports ");
-                    cbcRepos.saveAll(cbcReportsLIST);
-
-                    log.info("adding to reports ");
-                    reportRepo.saveAll(reportsToBeSave);
-
-
             }
-            else {
-                Iterable<Report> reportList = report.stream().map(reportVo -> new Report(reportVo.getPage(), reportVo.getInfectionName(), reportVo.getHaemoglobin(), reportVo.getPlatelets(), reportVo.getLiverFunctionTest(), reportVo.getInr(), reportVo.getReportName(), getCBCReport(reportVo.getList()), patient1)).collect(Collectors.toList());
-                //Report report1 = new Report(report.getPage(), report.getInfectionName(), report.getHaemoglobin(), report.getPlatelets(), report.getLiverFunctionTest(), report.getInr(), report.getReportName(),getCBCReport(report.getList()),patient.get());
-                List<Report> savedList = reportRepo.saveAll(reportList);
-                System.out.println("reports are saved into db " + savedList.toString());
-                //return Mapping.getReportResponseDTO(savedList);
-            }
-            } else {
-            throw new PatientNotFoundException(1234, "generic exceptions during processing ");
+            reportRepo.save(Mapping.getReports(reportVo,patient1));
+            log.info("saving reports");
+
+            return null;
         }
+        throw new PatientNotFoundException(123, "");
+
     }
 
     public static List<CBCReport> getCBCReport(List<CBCReportVO> list) {

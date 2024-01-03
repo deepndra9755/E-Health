@@ -47,6 +47,10 @@ public class CBCReport {
 		this.lymphocyte = lymphocyte;
 		this.monocyte = monocyte;
 	}
+
+
+
+
 	public Integer getCid() {
 		return cid;
 	}
