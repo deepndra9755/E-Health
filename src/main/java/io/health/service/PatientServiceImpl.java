@@ -57,7 +57,7 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public ReportResponseDTO addReports(ReportVo reportVo, Integer pid, Integer rid) throws ReportsNotAddedException, PatientNotFoundException {
+    public List<Report> addReports(ReportVo reportVo, Integer pid, Integer rid) throws ReportsNotAddedException, PatientNotFoundException {
 //
         Optional<Patient> patient = repo.findById(pid);
         log.info("fetched patient record {}", patient);
@@ -74,23 +74,22 @@ public class PatientServiceImpl implements PatientService {
                         reportRetrive.getPatient().getPid()
                 );
                 if (reportRetrive.getReportName().equals(reportVo.getReportName()) & reportRetrive.getPage().equals(reportVo.getPage())) {
-                 List<CBCReport> cbcReport= Mapping.getCBCReport(reportVo.getList(),reportRetrive);
-                   cbcRepos.saveAll(cbcReport);
+                    List<CBCReport> cbcReport = Mapping.getCBCReport(reportVo.getList(), reportRetrive);
+                    cbcRepos.saveAll(cbcReport);
                     log.info("saving cbc reports");
-                    return null;
+                    return findByIdReport(pid);
                 }
             }
-            reportRepo.save(Mapping.getReports(reportVo,patient1));
+            reportRepo.save(Mapping.getReports(reportVo, patient1));
             log.info("saving reports");
-
-            return null;
+            return findByIdReport(pid);
         }
         throw new PatientNotFoundException(123, "");
 
     }
 
-    public static List<CBCReport> getCBCReport(List<CBCReportVO> list) {
-        return list.stream().map(cbcReportVO -> new CBCReport(cbcReportVO.getRedBloodCell(), cbcReportVO.getNeutrophil(), cbcReportVO.getEosinophil(), cbcReportVO.getBasophil(), cbcReportVO.getLymphocyte(), cbcReportVO.getMonocyte())).collect(Collectors.toList());
+    public List<Report> findByIdReport(Integer id) {
+        return reportRepo.findByPatientPid(id);
     }
 
 
@@ -100,11 +99,11 @@ public class PatientServiceImpl implements PatientService {
     }
 
     @Override
-    public List<ReportResponseDTO> getReports(Integer reportID) throws ReportsNotAddedException {
-        List<Report> reportList = reportRepo.findAll();
-        if (!reportList.isEmpty()) {
+    public ReportResponseDTO getReports(Integer reportID) throws ReportsNotAddedException {
+        Optional<Report> reportList = reportRepo.findById(reportID);
+        if (reportList.isPresent()) {
             System.out.println("report detailes" + reportList);
-            return Mapping.getReportResponseDTO(reportList);
+            return Mapping.getReportResponseDTO(reportList.get());
         }
         throw new RuntimeException("there is no reports");
     }

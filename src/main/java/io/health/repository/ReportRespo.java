@@ -1,6 +1,7 @@
 package io.health.repository;
 
 import io.health.entities.Report;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -17,6 +18,7 @@ public interface ReportRespo extends JpaRepository<Report,Integer> {
     List<Report> findReportsWithPatientAndCBCReportsByPatientId(Integer patientId);
 
     List<Report> findByPatientPid(Integer patientId);
+
 
 
 

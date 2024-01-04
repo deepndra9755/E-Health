@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.health.dto.PatientRequestDto;
 import io.health.dto.PatientResponseDto;
+import io.health.dto.ReportResponseDTO;
 import io.health.entities.Patient;
 import io.health.entities.Report;
 import io.health.exceptions.PatientNotFoundException;
@@ -31,62 +32,44 @@ import java.util.List;
 public class PatientResource {
 
 
-	@Autowired(required = true)
-	private PatientService patientService;
+    @Autowired(required = true)
+    private PatientService patientService;
 
-	@Autowired(required = true)
-	private ResponseBuilder response;
+    @Autowired(required = true)
+    private ResponseBuilder response;
 
-	@Autowired
-	private Utility utility;
+    @Autowired
+    private Utility utility;
 
-@PostMapping("/Patient")
-public ResponseEntity<PatientResponseDto> addPatient(@RequestBody PatientRequestDto request) throws AadharInvalidException, GeneralException, JsonProcessingException {
-	log.info("request come to add patinet");
-	PatientResponseDto patientResponse=patientService.addPatient(request);
-   return new ResponseEntity<>(patientResponse,HttpStatus.OK);
+    @PostMapping("/Patient")
+    public ResponseEntity<PatientResponseDto> addPatient(@RequestBody PatientRequestDto request) throws AadharInvalidException, GeneralException, JsonProcessingException {
+        log.info("request come to add patinet");
+        PatientResponseDto patientResponse = patientService.addPatient(request);
+        return new ResponseEntity<>(patientResponse, HttpStatus.OK);
 
-}
+    }
+
+    //
+    @PostMapping("/patient/{pid}")
+    public ResponseEntity<List<Report>> addReports(@RequestBody ReportVo reports, @PathVariable Integer pid, @PathVariable Integer rid) throws AadharInvalidException, GeneralException, ReportsNotAddedException, PatientNotFoundException {
+        //checkPatientExist(request.getAadhasrNumber());
+        List<Report> reportList = patientService.addReports(reports, pid, rid);
+        return new ResponseEntity<>(reportList, HttpStatus.OK);
+    }
+
+    //
+    @GetMapping("/report/{rid}")
+    public ResponseEntity<ReportResponseDTO> getReports(
+            @PathVariable Integer rid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
+        ReportResponseDTO report = patientService.getReports(rid);
+        System.out.println("response :" + report);
+        return new ResponseEntity<>(report, HttpStatus.OK);
+    }
 //
-@PostMapping("/patient/{pid}/report/{rid}")
-public ResponseEntity<PatientResponseDto> addReports(@RequestBody ReportVo reports,@PathVariable Integer pid,@PathVariable Integer rid) throws AadharInvalidException, GeneralException, ReportsNotAddedException, PatientNotFoundException {
-   //checkPatientExist(request.getAadhasrNumber());
-	patientService.addReports(reports, pid,rid);
-  return  new ResponseEntity<>(null, HttpStatus.OK);
-}
-//
-//	@GetMapping("/report/{pid}")
-//	public ResponseEntity<Patient> getReports(
-//			@PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
-//		//checkPatientExist(request.getAadhasrNumber());
-//		Patient patientResponse=patientService.getPatient(pid);
-//		System.out.println("response :"+patientResponse);
-////   log.info("after saved :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
-////   return response.buildFinalResponse(patientResponse, "Success", 3000);
-//		return  new ResponseEntity<Patient>(patientResponse, HttpStatus.OK);
-//	}
-//
-//	@GetMapping("/patient/{pid}")
-//	public ResponseEntity<Patient> getPatient(
-//			@PathVariable Integer pid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
-//		//checkPatientExist(request.getAadhasrNumber());
-//		Patient patientResponse=patientService.getPatient(pid);
-//		System.out.println("response :"+patientResponse);
-////   log.info("after saved :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
-////   return response.buildFinalResponse(patientResponse, "Success", 3000);
-//		return  new ResponseEntity<Patient>(patientResponse, HttpStatus.OK);
-//	}
-//
-//
-////@DeleteMapping("/Patient/{pid}")
-////public ResponseVo deleteReports(@PathVariable("pid") Integer pid) throws AadharInvalidException, GeneralException, PatientNotFoundException {
-////  // checkPatientExist(request.getAadharNumber());
-////	log.info("request come to delete patient & reports");
-////   PatientResponseDto patientResponse=patientService.deletePatient(pid);
-////   log.info("confirmation msg  :: {}",response.buildFinalResponse(patientResponse, "Success", 3000));
-////   return response.buildFinalResponse(patientResponse, "Success", 3000);
-////
-////}
+
+
+
+
 
 
 }
