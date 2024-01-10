@@ -88,15 +88,38 @@ public class PatientServiceImpl implements PatientService {
 
     }
 
+    @Override
+    public Report deleteReports(Integer rid) throws GeneralException, PatientNotFoundException {
+
+
+        Optional<Report> report = reportRepo.findById(rid);
+        log.info("fetched report record ");
+        if (report.isPresent()) {
+            Report report1 = report.get();
+
+
+            log.info("reportName:  {} reportId : {} page: {} infectionName: {} platelets: {} pid: {}", report1.getReportName(),
+                    report1.getReportId(),
+                    report1.getPage(),
+                    report1.getInfectionName(),
+                    report1.getPlatelets(),
+                    report1.getPatient().getPid()
+            );
+
+
+            log.info("saving reports");
+            reportRepo.deleteById(rid);
+             return report1;
+        }
+        throw new PatientNotFoundException(123, "");
+
+
+    }
+
     public List<Report> findByIdReport(Integer id) {
         return reportRepo.findByPatientPid(id);
     }
 
-
-    @Override
-    public PatientResponseDto deletePatient(Integer pid) throws GeneralException, PatientNotFoundException {
-        return null;
-    }
 
     @Override
     public ReportResponseDTO getReports(Integer reportID) throws ReportsNotAddedException {
