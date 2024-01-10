@@ -71,7 +71,10 @@ public class PatientResource {
     }
 //
     
-   
+    @DeleteMapping("report/rid")
+    public ResponseEntity<ReportResponseDTO> deleteReports(){
+            return null;
+     }
 
 
 
