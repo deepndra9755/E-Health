@@ -61,9 +61,9 @@ public class PatientResource {
     @GetMapping("/report/{rid}")
     public ResponseEntity<ReportResponseDTO> getReports(
             @PathVariable Integer rid) throws AadharInvalidException, GeneralException, ReportsNotAddedException {
-        ReportResponseDTO report = patientService.getReports(rid);
-        System.out.println("response :" + report);
-        return new ResponseEntity<>(report, HttpStatus.OK);
+        ReportResponseDTO reportSaved = patientService.getReports(rid);
+        System.out.println("response :" + reportSaved);
+        return new ResponseEntity<>(reportSaved, HttpStatus.OK);
     }
 //
 
