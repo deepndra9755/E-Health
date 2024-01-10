@@ -72,8 +72,9 @@ public class PatientResource {
 //
     
     @DeleteMapping("report/rid")
-    public ResponseEntity<ReportResponseDTO> deleteReports(){
-            return null;
+    public ResponseEntity<String> deleteReports(@PathVariable Integer rid) throws GeneralException, PatientNotFoundException {
+        patientService.deleteReports(rid);
+        return new ResponseEntity<>("Report deleted",HttpStatus.OK);
      }
 
 

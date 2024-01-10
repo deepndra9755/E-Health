@@ -94,8 +94,14 @@ public class PatientServiceImpl implements PatientService {
 
 
     @Override
-    public PatientResponseDto deletePatient(Integer pid) throws GeneralException, PatientNotFoundException {
-        return null;
+    public void deleteReports(Integer rid) throws GeneralException, PatientNotFoundException {
+        Optional<Report> report = reportRepo.findById(rid);
+
+        if (report.isPresent()) {
+            reportRepo.deleteById(rid);
+        }
+        throw new RuntimeException("Report not found");
+
     }
 
     @Override

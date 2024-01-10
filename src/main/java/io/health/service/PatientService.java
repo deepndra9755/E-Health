@@ -19,7 +19,7 @@ public interface PatientService {
 	
 	public List<Report> addReports(ReportVo reportVo, Integer pid,Integer rid) throws ReportsNotAddedException, PatientNotFoundException;
 
-	public PatientResponseDto deletePatient(Integer pid) throws GeneralException, PatientNotFoundException;
+	public void deleteReports(Integer pid) throws GeneralException, PatientNotFoundException;
 
 	public ReportResponseDTO getReports(Integer pid) throws ReportsNotAddedException;
 
