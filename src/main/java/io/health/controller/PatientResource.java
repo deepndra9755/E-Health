@@ -1,11 +1,9 @@
 package io.health.controller;
 
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.health.dto.PatientRequestDto;
 import io.health.dto.PatientResponseDto;
 import io.health.dto.ReportResponseDTO;
-import io.health.entities.Patient;
 import io.health.entities.Report;
 import io.health.exceptions.PatientNotFoundException;
 import io.health.vo.request.ReportVo;
@@ -25,9 +23,9 @@ import io.health.response.ResponseBuilder;
 import io.health.service.PatientService;
 import io.health.utils.Utility;
 
-import lombok.extern.slf4j.Slf4j;
-
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -47,9 +45,22 @@ public class PatientResource {
 
     @PostMapping("/Patient")
     public ResponseEntity<PatientResponseDto> addPatient(@RequestBody PatientRequestDto request) throws AadharInvalidException, GeneralException, JsonProcessingException {
+        checkAadharNumberIsValid(request.getAadharNumber());
         log.info("request come to add patinet");
         PatientResponseDto patientResponse = patientService.addPatient(request);
         return new ResponseEntity<>(patientResponse, HttpStatus.OK);
+
+    }
+
+    private boolean checkAadharNumberIsValid(String aadharNumber) {
+            Pattern pattern = Pattern.compile("^[0-9]{12}$");
+            Matcher matcher = pattern.matcher(aadharNumber);
+
+        if (matcher.matches()) {
+            return true;
+        } else {
+            throw new AadharInvalidException(202,"Invalid Aadhar number format");
+        }
 
     }
 

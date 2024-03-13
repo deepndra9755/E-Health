@@ -33,6 +33,9 @@ public class Patient {
 	@JoinColumn(name = "patient_id")
 	private List<Report> report;
 
+
+
+
 	public Patient(String aadharNumber, String name, String lastName, String address, Long mobile,
 			LocalDate date) {
 		super();

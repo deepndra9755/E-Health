@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @ToString
 @Getter
@@ -19,4 +18,10 @@ public class ResponseVo  {
 	private String statusMessage;
 	private PatientResponseDto patient;
 
+
+	public ResponseVo(Integer statusCode, String statusMessage, PatientResponseDto patient) {
+		this.statusCode = statusCode;
+		this.statusMessage = statusMessage;
+		this.patient = patient;
+	}
 }
